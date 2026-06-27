@@ -2,6 +2,13 @@
 
 Este projeto oferece uma interface dinâmica e moderna para consulta, filtragem e cruzamento interdisciplinar de habilidades e competências da **BNCC (Base Nacional Comum Curricular)** e da **BNCC da Computação**.
 
+## 🌐 Demonstração Online
+
+O aplicativo está publicado e pode ser acessado e utilizado diretamente no navegador em:
+👉 **[https://zolhos.github.io/BNCC-prompter/](https://zolhos.github.io/BNCC-prompter/)**
+
+---
+
 ## Propósito do Projeto
 
 O **BNCC Prompter** foi criado para:
@@ -22,8 +29,11 @@ O projeto está em **fase de desenvolvimento**.
 ## Estrutura do Repositório
 
 ```
+├── .github/workflows/                    # Integração e Deploy Contínuo (GitHub Actions)
+│   └── deploy.yml                        # Deploy automático do WebApp para o GitHub Pages
+│
 ├── data/                                 # Arquivos de Desenvolvimento e Dados Brutos
-│   ├── raw/                              # Planilhas Excel e JSONs originais
+│   ├── raw/                              # Planilhas Excel e JSONs originais (Ignorado localmente)
 │   │   ├── BNCC_Completa.json
 │   │   ├── BNCC_Computacao_Rica.json
 │   │   ├── BNCC_COMPUTAÇÃO_BY_ZOLHOS.xlsx
@@ -31,7 +41,7 @@ O projeto está em **fase de desenvolvimento**.
 │   └── scripts/                          # Scripts de limpeza e unificação
 │       └── optimize_jsons.py
 │
-└── public/                               # Arquivos do WebApp de Produção
+└── public/                               # Arquivos do WebApp de Produção (Publicado online)
     ├── index.html                        # Interface do usuário (SPA)
     ├── style.css                         # Estilização premium (Glassmorphism / Print styles)
     ├── app.js                            # Lógica interativa, seleção e exportações

@@ -927,6 +927,9 @@ function exportSelectionToPdf() {
       <div class="print-header">
         <h1>Auxiliar BNCC — Planejamento Pedagógico</h1>
         <p>Planejamento estruturado contendo as habilidades curriculares selecionadas pelo docente.</p>
+        <p style="font-size: 8.5pt; color: #555; margin-top: 6px; font-family: sans-serif;">
+          Documento gerado via: <strong>github.com/zolhos/BNCC-prompter</strong>
+        </p>
       </div>
   `;
   
