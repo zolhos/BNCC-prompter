@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auxiliar BNCC & Computação - Explorador Dinâmico</title>
+  <meta name="description" content="Interface moderna para consulta, filtragem, cruzamento e exportação de habilidades da BNCC e BNCC Computação. Desenvolvido para educadores e fluxos de IA.">
+  
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+    
+    <!-- Top Header -->
+    <header class="app-header">
+      <div class="header-logo">
+        <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <div class="logo-text">
+          <h1>Auxiliar<span>BNCC</span></h1>
+          <p>Explorador Pedagógico Integrado</p>
+        </div>
+      </div>
+      
+      <!-- Tabs Navigation -->
+      <nav class="app-tabs">
+        <button id="tab-explorer" class="tab-btn active" data-tab="explorer">
+          <i class="fa-solid fa-list-check"></i> Habilidades
+        </button>
+        <button id="tab-competencies" class="tab-btn" data-tab="competencies">
+          <i class="fa-solid fa-award"></i> Competências
+        </button>
+        <button id="tab-crossover" class="tab-btn" data-tab="crossover">
+          <i class="fa-solid fa-circle-nodes"></i> Cruzamento Interdisciplinar
+        </button>
+      </nav>
+      
+      <!-- System Stats / Badge -->
+      <div class="header-meta">
+        <span class="meta-badge glow-purple">
+          <i class="fa-solid fa-database"></i> Computação Integrada
+        </span>
+      </div>
+    </header>
+    
+    <div class="main-layout">
+      
+      <!-- Left Sidebar (Filters) -->
+      <aside class="filters-sidebar" id="filters-sidebar">
+        <!-- Sidebar context info (changes based on active tab) -->
+        <div id="sidebar-explorer-content">
+          <div class="sidebar-section">
+            <h3 class="section-title"><i class="fa-solid fa-magnifying-glass"></i> Busca Textual</h3>
+            <div class="search-wrapper">
+              <input type="text" id="search-input" placeholder="Pesquise por código, termo..." autocomplete="off">
+              <i class="fa-solid fa-search search-icon"></i>
+              <button id="clear-search-btn" class="clear-btn" style="display:none;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+          </div>
+          
+          <div class="sidebar-section">
+            <h3 class="section-title"><i class="fa-solid fa-sliders"></i> Base Curricular</h3>
+            <div class="filter-group">
+              <label class="filter-label">Origem</label>
+              <div class="pill-selector" id="filter-origin">
+                <button class="pill-btn active" data-value="todos">Todas</button>
+                <button class="pill-btn" data-value="geral">Geral</button>
+                <button class="pill-btn" data-value="computacao">Computação</button>
+              </div>
+            </div>
+            
+            <div class="filter-group">
+              <label class="filter-label">Etapa de Ensino</label>
+              <div class="pill-selector" id="filter-stage">
+                <button class="pill-btn active" data-value="todos">Todas</button>
+                <button class="pill-btn" data-value="infantil">Infantil</button>
+                <button class="pill-btn" data-value="fundamental">Fundamental</button>
+                <button class="pill-btn" data-value="medio">Médio</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="sidebar-section" id="section-component">
+            <h3 class="section-title"><i class="fa-solid fa-book-open"></i> Componente Curricular</h3>
+            <select id="select-component" class="custom-select">
+              <option value="todos">Todos os Componentes</option>
+            </select>
+          </div>
+          
+          <div class="sidebar-section" id="section-grade">
+            <h3 class="section-title"><i class="fa-solid fa-calendar-day"></i> Ano Letivo / Faixa</h3>
+            <select id="select-grade" class="custom-select">
+              <option value="todos">Todos os Anos</option>
+            </select>
+          </div>
+          
+          <div class="sidebar-section" id="section-axis">
+            <h3 class="section-title"><i class="fa-solid fa-network-wired"></i> Eixo Temático</h3>
+            <select id="select-axis" class="custom-select">
+              <option value="todos">Todos os Eixos</option>
+            </select>
+          </div>
+          
+          <button id="reset-filters-btn" class="reset-btn">
+            <i class="fa-solid fa-arrow-rotate-left"></i> Limpar Filtros
+          </button>
+        </div>
+
+        <!-- Sidebar layout for competencies tab (swapped via JS) -->
+        <div id="sidebar-competencies-content" style="display:none;">
+          <div class="sidebar-section">
+            <h3 class="section-title"><i class="fa-solid fa-award"></i> Tipo de Competência</h3>
+            <div class="filter-group">
+              <div class="pill-selector" id="filter-comp-type">
+                <button class="pill-btn active" data-value="gerais">Gerais</button>
+                <button class="pill-btn" data-value="especificas">Específicas</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="sidebar-section" id="section-comp-disciplinas" style="display:none;">
+            <h3 class="section-title"><i class="fa-solid fa-book-bookmark"></i> Disciplina / Componente</h3>
+            <select id="select-comp-discipline" class="custom-select">
+              <option value="todos">Selecione uma disciplina...</option>
+            </select>
+          </div>
+        </div>
+      </aside>
+      
+      <!-- Main Content Area -->
+      <main class="content-panel">
+        
+        <!-- HABILIDADES (EXPLORER) TAB -->
+        <section id="pane-explorer" class="tab-pane active">
+          <div class="pane-header">
+            <div class="results-info">
+              <h2>Catálogo de Habilidades</h2>
+              <p id="results-count">Carregando dados...</p>
+            </div>
+            <div class="pane-actions">
+              <span class="active-filters-badges" id="active-filters-container"></span>
+            </div>
+          </div>
+          
+          <div class="habilidades-grid" id="habilidades-container">
+            <div class="loading-state">
+              <div class="spinner"></div>
+              <p>Carregando as bases de dados curriculares...</p>
+            </div>
+          </div>
+        </section>
+        
+        <!-- COMPETENCIAS TAB -->
+        <section id="pane-competencies" class="tab-pane">
+          <div class="pane-header">
+            <div class="results-info">
+              <h2 id="competencies-pane-title">Competências Gerais da Educação Básica</h2>
+              <p id="competencies-pane-subtitle">As 10 competências essenciais que orientam a educação brasileira.</p>
+            </div>
+          </div>
+          
+          <div class="competencias-list-container" id="competencies-container">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+        
+        <!-- CROSSOVER TAB -->
+        <section id="pane-crossover" class="tab-pane">
+          <div class="pane-header">
+            <div class="results-info">
+              <h2>Cruzamento Interdisciplinar</h2>
+              <p>Conecte habilidades da BNCC Computação com habilidades gerais de outras áreas de forma contextualizada.</p>
+            </div>
+          </div>
+          
+          <div class="crossover-controls">
+            <div class="control-box">
+              <label for="cross-select-grade"><i class="fa-solid fa-calendar-day"></i> Selecione o Ano Letivo</label>
+              <select id="cross-select-grade" class="custom-select glow-select">
+                <option value="1º">1º ano - Ensino Fundamental</option>
+                <option value="2º">2º ano - Ensino Fundamental</option>
+                <option value="3º">3º ano - Ensino Fundamental</option>
+                <option value="4º">4º ano - Ensino Fundamental</option>
+                <option value="5º" selected>5º ano - Ensino Fundamental</option>
+                <option value="6º">6º ano - Ensino Fundamental</option>
+                <option value="7º">7º ano - Ensino Fundamental</option>
+                <option value="8º">8º ano - Ensino Fundamental</option>
+                <option value="9º">9º ano - Ensino Fundamental</option>
+                <option value="Educação Infantil">Educação Infantil</option>
+                <option value="1º EM">1º ano - Ensino Médio</option>
+                <option value="2º EM">2º ano - Ensino Médio</option>
+                <option value="3º EM">3º ano - Ensino Médio</option>
+              </select>
+            </div>
+            
+            <div class="control-box">
+              <label for="cross-select-component"><i class="fa-solid fa-book-open"></i> Componente Curricular BNCC</label>
+              <select id="cross-select-component" class="custom-select glow-select">
+                <option value="todos">Todos os Componentes</option>
+                <option value="Matemática" selected>Matemática</option>
+                <option value="Língua Portuguesa">Língua Portuguesa</option>
+                <option value="Ciências">Ciências</option>
+                <option value="História">História</option>
+                <option value="Geografia">Geografia</option>
+                <option value="Arte">Arte</option>
+                <option value="Educação Física">Educação Física</option>
+              </select>
+            </div>
+            
+            <div class="control-box text-center justify-center flex-direction-row align-items-center">
+              <button id="cross-action-btn" class="action-btn glow-purple">
+                <i class="fa-solid fa-circle-nodes animate-pulse"></i> Mapear Integrações
+              </button>
+            </div>
+          </div>
+          
+          <div class="crossover-workspace">
+            <div class="crossover-column">
+              <div class="column-title">
+                <span class="badge glow-purple">Computação</span>
+                <h3>Habilidades de Computação</h3>
+              </div>
+              <div class="column-cards" id="cross-computacao-container">
+                <div class="empty-state">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                  <p>Selecione os filtros acima e clique em "Mapear Integrações".</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="crossover-connector">
+              <div class="connector-line"></div>
+              <div class="connector-node"><i class="fa-solid fa-link"></i></div>
+            </div>
+            
+            <div class="crossover-column">
+              <div class="column-title">
+                <span class="badge glow-blue">BNCC Geral</span>
+                <h3>Habilidades do Componente</h3>
+              </div>
+              <div class="column-cards" id="cross-geral-container">
+                <div class="empty-state">
+                  <i class="fa-solid fa-book"></i>
+                  <p>As habilidades correspondentes serão listadas aqui.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        
+      </main>
+    </div>
+  </div>
+
+  <!-- Cesta de Planejamento (Floating Drawer) -->
+  <div class="planning-basket collapsed" id="planning-basket">
+    <div class="basket-header" id="basket-toggle-btn">
+      <div class="basket-title-wrapper">
+        <i class="fa-solid fa-briefcase"></i>
+        <span>Planejamento Docente</span>
+        <span class="basket-badge-count" id="basket-badge-count">0</span>
+      </div>
+      <i class="fa-solid fa-chevron-up chevron-icon" id="basket-chevron"></i>
+    </div>
+    <div class="basket-body">
+      <div class="basket-scroll-area" id="basket-scroll-area">
+        <p class="basket-empty-msg" id="basket-empty-msg">Nenhuma habilidade selecionada para exportação.</p>
+        <ul class="basket-items-list-ul" id="basket-items-list-ul">
+          <!-- Populated dynamically -->
+        </ul>
+      </div>
+      <div class="basket-footer">
+        <button id="export-pdf-btn" class="export-sub-btn pdf-btn"><i class="fa-solid fa-file-pdf"></i> Exportar PDF</button>
+        <button id="export-prompt-btn" class="export-sub-btn prompt-btn"><i class="fa-solid fa-robot"></i> Prompt de IA</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Prompt Copied Overlay Notification -->
+  <div class="toast-notification" id="toast-notification">
+    <i class="fa-solid fa-circle-check"></i> Prompt copiado para a área de transferência!
+  </div>
+
+  <!-- Detail Modal Dialog (Floating Overlay) -->
+  <dialog id="detail-modal" class="detail-dialog">
+    <div class="modal-content glass">
+      <header class="modal-header">
+        <span class="modal-code" id="modal-code">EF15CO01</span>
+        <h3 id="modal-title">Detalhe da Habilidade</h3>
+        <button id="close-modal-btn" class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+      </header>
+      <div class="modal-body" id="modal-body">
+        <!-- Content injected dynamically -->
+      </div>
+    </div>
+  </dialog>
+
+  <!-- IA Prompt Preview Modal -->
+  <dialog id="prompt-modal" class="prompt-dialog">
+    <div class="modal-content glass" style="max-width: 600px;">
+      <header class="modal-header">
+        <span class="modal-code"><i class="fa-solid fa-robot"></i> AI</span>
+        <h3>Prompt Prontinho para o Gemini/ChatGPT</h3>
+        <button id="close-prompt-modal-btn" class="close-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+      </header>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 8px;">
+          Copie o texto abaixo e cole em sua Inteligência Artificial favorita para gerar atividades de forma estruturada.
+        </p>
+        <textarea id="prompt-textarea" class="prompt-textarea-box" readonly></textarea>
+        <button id="copy-clipboard-btn" class="action-btn glow-purple" style="margin-top: 12px; width: 100%; justify-content: center;">
+          <i class="fa-solid fa-copy"></i> Copiar Texto Completo
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
